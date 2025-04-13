@@ -1,3 +1,5 @@
+import numpy as np
+
 def hyperparameter_search(X_train, y_train, X_val, y_val):
     # 超参数包含学习率、隐藏层大小、正则化权重、迭代次数和batch size
     learning_rates = [1e-3, 1e-4]

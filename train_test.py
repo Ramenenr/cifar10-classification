@@ -1,3 +1,7 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+
 # 模型训练
 def train(model, X, y, X_val, y_val, learning_rate, reg, num_iters, batch_size, verbose=False, learning_rate_decay=0.95):
     num_train = X.shape[0]
@@ -52,22 +56,32 @@ def train(model, X, y, X_val, y_val, learning_rate, reg, num_iters, batch_size, 
     model.W2 = best_params['W2']
     model.b2 = best_params['b2']
 
-    # 可视化训练集和验证集的 loss 曲线
-    plt.figure(figsize=(12, 4))
-    plt.subplot(1, 2, 1)
+    # 可视化训练过程
+    plt.figure(figsize=(12, 8))
+
+    # 训练集损失曲线
+    plt.subplot(2, 1, 1)
     plt.plot(loss_history, label='Training Loss')
-    plt.plot(val_loss_history, label='Validation Loss')
     plt.xlabel('Iterations')
     plt.ylabel('Loss')
+    plt.title('Training Loss')
     plt.legend()
 
-    # 可视化验证集的 accuracy 曲线
-    plt.subplot(1, 2, 2)
+    # 验证集损失曲线
+    plt.subplot(2, 2, 3)
+    plt.plot(val_loss_history, label='Validation Loss')
+    plt.xlabel('Epochs')
+    plt.title('Validation Loss')
+    plt.legend()
+
+    # 验证集的准确率曲线
+    plt.subplot(2, 2, 4)
     plt.plot(val_acc_history, label='Validation Accuracy')
     plt.xlabel('Epochs')
-    plt.ylabel('Accuracy')
+    plt.title('Validation Accuracy')
     plt.legend()
 
+    plt.tight_layout()
     plt.show()
 
     return {

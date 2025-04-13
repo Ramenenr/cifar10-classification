@@ -1,3 +1,5 @@
+import numpy as np
+
 class nn:
     def __init__(self, input_size, hidden_size, output_size, activation='relu'):
         self.W1 = 0.001 * np.random.randn(input_size, hidden_size)

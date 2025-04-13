@@ -4,7 +4,8 @@ from neural_network import nn
 from train_test import train, test
 from hyperparameter_search import hyperparameter_search
 import matplotlib.pyplot as plt
-
+import numpy as np
+import seaborn as sns
 
 X_train, y_train, X_test, y_test = load_cifar10('cifar-10-batches-py')
 
@@ -26,7 +27,7 @@ X_train = X_train[:num_training]
 y_train = y_train[:num_training]
 
 # 参数查找
-best_model = hyperparameter_search(X_train, y_train, X_val, y_val)
+# best_model = hyperparameter_search(X_train, y_train, X_val, y_val)
 
 # 利用表现最优的超参数重新训练模型
 best_model = nn(input_size=3 * 32 * 32, hidden_size=128, output_size=10)
@@ -37,46 +38,5 @@ test_accuracy = test(best_model, X_test, y_test)
 print('Test accuracy: %f' % test_accuracy)
 
 
-
-# 可视化训练过程
-plt.figure(figsize=(12, 8))
-
-# 训练集损失曲线
-plt.subplot(2, 1, 1)
-plt.plot(stats['loss_history'], label='Training Loss')
-plt.xlabel('Iterations')
-plt.ylabel('Loss')
-plt.title('Training Loss')
-plt.legend()
-
-# 验证集损失曲线
-plt.subplot(2, 2, 3)
-plt.plot(stats['val_loss_history'], label='Validation Loss')
-plt.xlabel('Epochs')
-plt.title('Validation Loss')
-plt.legend()
-
-# 验证集的准确率曲线
-plt.subplot(2, 2, 4)
-plt.plot(stats['val_acc_history'], label='Validation Accuracy')
-plt.xlabel('Epochs')
-plt.title('Validation Accuracy')
-plt.legend()
-
-plt.tight_layout()
-plt.show()
-
-
-# 可视化模型网络参数
-import seaborn as sns
-
-plt.figure(figsize=(10, 8))
-sns.heatmap(best_model.W1, cmap='viridis')
-plt.title('Visualization of W1 Weights')
-plt.xlabel('Hidden Units')
-plt.ylabel('Input Units')
-plt.show()
-
 # 保存模型权重
-import numpy as np
-np.savez('model_weights.npz', W1=best_model.W1, b1=best_model.b1, W2=best_model.W2, b2=best_model.b2)    
+# np.savez('model_weights.npz', W1=best_model.W1, b1=best_model.b1, W2=best_model.W2, b2=best_model.b2)
